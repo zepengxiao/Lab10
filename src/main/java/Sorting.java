@@ -16,13 +16,13 @@ import javax.swing.JFrame;
 public class Sorting {
 
     /** Increment to sweep the sort. */
-    private static final int SORT_INCREMENT = 10000;
+    private static final int SORT_INCREMENT = 100;
 
     /** Total number of values to try. */
     private static final int TOTAL_SORT_VALUES = 100;
 
     /** Total data size. */
-    private static final int TOTAL_INTEGER_VALUES = 1000000;
+    private static final int TOTAL_INTEGER_VALUES = 10000;
 
     /**
      * Bubble sort.
@@ -32,7 +32,25 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] bubbleSort(final int[] array) {
-        return null;
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < array[i - 1]) {
+                int tmp = array[i];
+                array[i] = array[i - 1];
+                array[i - 1] = tmp;
+            }
+        }
+        boolean isSorted = true;
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < array[i - 1]) {
+                isSorted = false;
+            }
+        }
+        if (!isSorted) {
+            for (int i = 0; i < array.length; i++) {
+                array[i] = bubbleSort(array)[i];
+            }
+        }
+        return array;
     }
 
     /**
@@ -43,7 +61,20 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] selectionSort(final int[] array) {
-        return null;
+        for (int i = 0; i < array.length; i++) {
+            int ini = array[i];
+            int tmp = array[i];
+            int index = i;
+            for (int j = i; j < array.length; j++) {
+                if (tmp > array[j]) {
+                    tmp = array[j];
+                    index = j;
+                }
+            }
+            array[i] = array[index];
+            array[index] = ini;
+        }
+        return array;
     }
 
     /**
@@ -54,7 +85,22 @@ public class Sorting {
      */
     @SuppressWarnings("unused")
     private static int[] mergeSort(final int[] array) {
-        return null;
+        if (array.length == 1) {
+            return array;
+        } else if (array.length == 2) {
+            if (array[0] > array[1]) {
+                int tmp = array[0];
+                array[0] = array[1];
+                array[1] = tmp;
+            }
+        } else {
+            int[] first =  mergeSort(Arrays.copyOfRange(array, 0, array.length / 2 + 1));
+            int[] second = mergeSort(Arrays.copyOfRange(array, array.length / 2 + 1, array.length));
+            for (int i = 0; i < array.length; i++) {
+                array[i] = merge(first, second)[i];
+            }
+        }
+        return array;
     }
 
     /**
